@@ -24,9 +24,13 @@ Example usage::
 
     model = RFDETRBase()
     detections = model.predict("image.jpg")
+
+    # Run inference with a custom confidence threshold
+    detections = model.predict("image.jpg", threshold=0.4)
 """
 
 from rfdetr.models.rf_detr import RFDETRBase, RFDETRLarge
 
 __version__ = "1.0.0"
+__author__ = "Roboflow"
 __all__ = ["RFDETRBase", "RFDETRLarge"]
