@@ -27,6 +27,10 @@ Example usage::
 
     # Run inference with a custom confidence threshold
     detections = model.predict("image.jpg", threshold=0.4)
+
+    # Print version info
+    import rfdetr
+    print(rfdetr.__version__)
 """
 
 from rfdetr.models.rf_detr import RFDETRBase, RFDETRLarge
@@ -34,3 +38,8 @@ from rfdetr.models.rf_detr import RFDETRBase, RFDETRLarge
 __version__ = "1.0.0"
 __author__ = "Roboflow"
 __all__ = ["RFDETRBase", "RFDETRLarge"]
+
+
+def get_version():
+    """Return the current version string."""
+    return __version__
