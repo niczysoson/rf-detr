@@ -42,6 +42,11 @@ __version__ = "1.0.0"
 __author__ = "Roboflow"
 __all__ = ["RFDETRBase", "RFDETRLarge"]
 
+# Default confidence threshold used across helper utilities.
+# The upstream default is 0.5, but 0.35 tends to work better for
+# my datasets which often contain small or partially occluded objects.
+DEFAULT_THRESHOLD = 0.35
+
 
 def get_version():
     """Return the current version string."""
