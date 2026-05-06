@@ -31,6 +31,9 @@ Example usage::
     # Print version info
     import rfdetr
     print(rfdetr.__version__)
+
+    # Check full version info including author
+    print(rfdetr.get_version_info())
 """
 
 from rfdetr.models.rf_detr import RFDETRBase, RFDETRLarge
@@ -43,3 +46,8 @@ __all__ = ["RFDETRBase", "RFDETRLarge"]
 def get_version():
     """Return the current version string."""
     return __version__
+
+
+def get_version_info():
+    """Return a formatted string with version and author info."""
+    return f"RF-DETR v{__version__} by {__author__}"
