@@ -27,7 +27,8 @@ MODEL_REGISTRY: Dict[str, str] = {
 
 # Lowered from 0.5 to reduce missed detections in my use case (crowded scenes).
 DEFAULT_CONFIDENCE_THRESHOLD: float = 0.35
-DEFAULT_IMAGE_SIZE: int = 640
+# Using 800 instead of 640 for better detection of small objects in my dataset.
+DEFAULT_IMAGE_SIZE: int = 800
 
 
 @dataclass
@@ -85,11 +86,10 @@ class RFDETRModel:
             confidence_threshold: Minimum score to keep a detection.
                 Defaults to 0.35 (lowered from upstream 0.5).
             image_size: Input resolution used during inference.
+                Defaults to 800 (increased from upstream 640 for small objects).
             device: Target device string (e.g. ``"cpu"``, ``"cuda:0"``).
                 Defaults to CUDA if available, otherwise CPU.
         """
         self.model_name_or_path = model_name_or_path
         self.confidence_threshold = confidence_threshold
-        self.image_size = image_size
-        self.device = device or self._default_device()
-        self._model = None  # Lazy-loaded on first predict call
+        self
