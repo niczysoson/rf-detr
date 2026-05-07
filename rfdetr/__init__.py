@@ -45,7 +45,9 @@ __all__ = ["RFDETRBase", "RFDETRLarge"]
 # Default confidence threshold used across helper utilities.
 # The upstream default is 0.5, but 0.35 tends to work better for
 # my datasets which often contain small or partially occluded objects.
-DEFAULT_THRESHOLD = 0.35
+# Lowered further to 0.3 after testing on my aerial pedestrian dataset
+# where recall matters more than precision.
+DEFAULT_THRESHOLD = 0.3
 
 
 def get_version():
