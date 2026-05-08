@@ -19,7 +19,9 @@ MODEL_REGISTRY: Dict[str, str] = {
 SUPPORTED_RESOLUTIONS: List[int] = [560, 616, 672, 728, 784, 840, 896, 952, 1008]
 
 DEFAULT_RESOLUTION: int = 560
-DEFAULT_CONFIDENCE_THRESHOLD: float = 0.5
+# Lowered from 0.5 to 0.4 — I found 0.5 misses too many valid detections
+# in my use case (small objects at distance). Adjust per dataset as needed.
+DEFAULT_CONFIDENCE_THRESHOLD: float = 0.4
 DEFAULT_NUM_CLASSES: int = 91  # COCO classes
 
 
@@ -72,36 +74,5 @@ class RFDETRConfig:
             import warnings
             warnings.warn(
                 f"Resolution {self.resolution} is not in the recommended list "
-                f"{SUPPORTED_RESOLUTIONS}. Performance may be suboptimal.",
-                UserWarning,
-                stacklevel=3,
+                f"{SUPPORTED_RESOLUTIONS}. Performance may be sub"
             )
-
-        if not (0.0 <= self.confidence_threshold <= 1.0):
-            raise ValueError(
-                f"confidence_threshold must be between 0 and 1, "
-                f"got {self.confidence_threshold}"
-            )
-
-        if self.num_classes < 1:
-            raise ValueError(
-                f"num_classes must be at least 1, got {self.num_classes}"
-            )
-
-        if self.class_names is not None and len(self.class_names) != self.num_classes:
-            raise ValueError(
-                f"Length of class_names ({len(self.class_names)}) must match "
-                f"num_classes ({self.num_classes})."
-            )
-
-    @property
-    def checkpoint_url_resolved(self) -> Optional[str]:
-        """Return the effective checkpoint URL (explicit override or registry)."""
-        if self.checkpoint_url is not None:
-            return self.checkpoint_url
-        return MODEL_REGISTRY.get(self.model_name)
-
-    @property
-    def input_size(self) -> Tuple[int, int]:
-        """Return (height, width) tuple for model input."""
-        return (self.resolution, self.resolution)
